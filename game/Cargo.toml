@@ -1,0 +1,19 @@
+[package]
+name = "game"
+version = "0.1.0"
+authors = ["Ivo Wetzel <ivo.wetzel@googlemail.com>"]
+
+[dependencies]
+renderer = { path = "../renderer", version = "0.1.0" }
+lazy_static = "*"
+rand = "*"
+
+gfx = "*"
+gfx_window_glutin = "0.16.0"
+gfx_device_gl = "*"
+
+
+cgmath = "*"
+genmesh = "*"
+image = "*"
+
