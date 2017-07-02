@@ -14,6 +14,7 @@ use cgmath::{Vector3, InnerSpace};
 // 3D Bezier Implementation ---------------------------------------------------
 #[derive(Debug)]
 pub struct Bezier {
+    // TODO use simple Vector3 for control points
     points: (Point, Point, Point, Point)
 }
 

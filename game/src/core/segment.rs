@@ -49,7 +49,7 @@ impl Segment {
             mesh: Mesh::from_raw(Vec::new(), Vec::new())
         };
         let origin = segment.from.pos;
-        segment.set_to_straight(origin);
+        segment.set_to_looping(origin);
         segment.generate();
         segment
     }
@@ -367,6 +367,8 @@ impl Segment {
                 )
             },
             SegmentType::Looping => {
+                let d = self.to.pos - self.from.pos;
+                // TODO display second control point at lower edge of loop
                 (self.from.clone(), self.to.clone(), self.angle, self.angle)
             }
         }

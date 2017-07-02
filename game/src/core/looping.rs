@@ -63,7 +63,7 @@ impl Loop {
             let n = Vector3::new(angle.cos() * -1.0, 0.0, angle.sin() * -1.0);
 
             // TODO calculate bi-normal outwards
-            let b = Vector3::new(0.0, 1.0, 0.0);
+            let b = -Vector3::new(angle.sin() * u.cos(), u.sin(), angle.cos() * u.cos());
 
             segments.push(Row {
                 pos: Vector3::new(x, y, z),
