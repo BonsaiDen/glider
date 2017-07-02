@@ -35,7 +35,7 @@ impl Course {
 
         // TODO handle segment indicies better
         let mut tree = Tree::new(250.0);
-        let c = Segment::new(Point::new(0.0, 0.0, 0.0, 200.0, 0.0));
+        let c = Segment::new(Point::new(0.0, 0.0, 0.0, 200.0, 0.0), 0.0);
         tree.insert(&c, 0);
         let segments = vec![c];
         Self {
@@ -143,13 +143,11 @@ impl Tree {
         let my = (ray.0.y.max(ray.1.y) / self.size).ceil() as i32;
         let mz = (ray.0.z.max(ray.1.z) / self.size).ceil() as i32;
 
-        let mut count = 0;
         for x in ix..mx + 1 {
             for y in iy..my + 1 {
                 for z in iz..mz + 1 {
                     if let Some(pairs) = self.cells.get(&(x, y, z)) {
                         for &(sid, tid) in pairs {
-                            count += 1;
                             if let Some(t) = segments[sid].mesh().intersect_ray(ray, tid) {
                                 return t;
                             }
@@ -166,8 +164,6 @@ impl Tree {
     pub fn insert(&mut self, s: &Segment, id: usize) {
 
         let triangles = s.mesh().triangles();
-        let count = triangles.len();
-        let mut insertions = 0;
         for (i, t) in triangles.into_iter().enumerate() {
 
             let ix = (t.0.x.min(t.1.x).min(t.2.x) / self.size).floor() as i32;
@@ -181,7 +177,6 @@ impl Tree {
             for x in ix..mx + 1 {
                 for y in iy..my + 1 {
                     for z in iz..mz + 1 {
-                        insertions += 1;
                         let mut cell = self.cells.entry((x, y, z)).or_insert_with(Vec::new);
                         cell.push((id, i));
                     }

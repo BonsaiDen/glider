@@ -23,36 +23,43 @@ use ::render::LineView;
 
 // 3D Course Segment Implementation -------------------------------------------
 pub struct Segment {
+
+    // Segment data
+    typ: SegmentType,
+    angle: f32,
     from: Point,
     to: Point,
 
-    angle: f32,
-    active_point: bool,
-    typ: SegmentType,
-
+    // Rendering
     rows: Vec<Row>,
-    mesh: Mesh
+    mesh: Mesh,
+
+    // Editing
+    active_point: bool
 }
 
 impl Segment {
 
-    pub fn new(from: Point) -> Self {
+    pub fn new(from: Point, angle: f32) -> Self {
         let mut segment = Self {
+            typ: SegmentType::Straight,
+            angle: angle,
             from: from.clone(),
             to: from,
 
-            angle: 0.0,
-            active_point: false,
-            typ: SegmentType::Straight,
-
             rows: Vec::new(),
-            mesh: Mesh::from_raw(Vec::new(), Vec::new())
+            mesh: Mesh::from_raw(Vec::new(), Vec::new()),
+
+            active_point: false
+
         };
         let origin = segment.from.pos;
-        segment.set_to_looping(origin);
+        segment.set_to_straight(origin);
         segment.generate();
         segment
     }
+
+    // TODO support serialization
 
     pub fn edit(&mut self, keyboard: &Keyboard) {
 
@@ -299,7 +306,6 @@ impl Segment {
             },
             _ => {
                 let (b, c, fa, ta) = self.control_points();
-                let color = [1.0, 1.0, 0.0, 1.0];
                 let a = self.from.clone();
                 let d = self.to.clone();
                 let bezier = Bezier::new(a, b, c, d);

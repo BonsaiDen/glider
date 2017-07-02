@@ -61,8 +61,6 @@ impl Loop {
             let z = self.points.0.pos.z + angle.cos() * u.cos() * self.radius + lerp(0.0, oz, l / PI);
 
             let n = Vector3::new(angle.cos() * -1.0, 0.0, angle.sin() * -1.0);
-
-            // TODO calculate bi-normal outwards
             let b = -Vector3::new(angle.sin() * u.cos(), u.sin(), angle.cos() * u.cos());
 
             segments.push(Row {
