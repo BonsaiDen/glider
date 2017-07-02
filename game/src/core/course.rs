@@ -35,7 +35,7 @@ impl Course {
 
         // TODO handle segment indicies better
         let mut tree = Tree::new(250.0);
-        let c = Segment::new(Point::new(0.0, 0.0, 0.0, 200.0, 0.0), 0.0);
+        let c = Segment::new(Point::new(0.0, 0.0, 0.0, 200.0, 0.0), 90.0);
         tree.insert(&c, 0);
         let segments = vec![c];
         Self {

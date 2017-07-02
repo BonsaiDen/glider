@@ -43,7 +43,7 @@ impl Segment {
     pub fn new(from: Point, angle: f32) -> Self {
         let mut segment = Self {
             typ: SegmentType::Straight,
-            angle: angle,
+            angle: 0.0,
             from: from.clone(),
             to: from,
 
@@ -55,6 +55,7 @@ impl Segment {
         };
         let origin = segment.from.pos;
         segment.set_to_straight(origin);
+        segment.rotate(origin, angle);
         segment.generate();
         segment
     }
